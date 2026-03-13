@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_AnimalAdmission" targetNamespace="http://zoo.example.com/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.12.0">
+  <bpmn:process id="Process_AnimalAdmission" name="Animal Admission to Enclosure" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_1" name="Zoo manager submits admission request" />
+    <bpmn:task id="Task_RecordRequest" name="Record admission request" />
+    <bpmn:exclusiveGateway id="Gateway_HealthCheckRequired" name="Origin = external?" />
+    <bpmn:task id="Task_PerformHealthCheck" name="Perform health check" />
+    <bpmn:exclusiveGateway id="Gateway_AnimalCleared" name="Animal cleared?" />
+    <bpmn:task id="Task_SelectEnclosure" name="Select suitable enclosure" />
+    <bpmn:exclusiveGateway id="Gateway_EnclosureAvailable" name="Suitable enclosure available?" />
+    <bpmn:task id="Task_PlaceAnimal" name="Place animal in enclosure" />
+    <bpmn:exclusiveGateway id="Gateway_ZookeeperAssigned" name="Enclosure already has zookeeper?" />
+    <bpmn:task id="Task_AssignZookeeper" name="Assign zookeeper to enclosure" />
+    <bpmn:task id="Task_ConfirmAdmission" name="Confirm admission" />
+    <bpmn:endEvent id="EndEvent_Admitted" name="Admission complete" />
+    <bpmn:endEvent id="EndEvent_NotAdmitted" name="Not admitted / Quarantine" />
+    <bpmn:endEvent id="EndEvent_NoEnclosure" name="Admission failed - No enclosure" />
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_RecordRequest" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_RecordRequest" targetRef="Gateway_HealthCheckRequired" />
+    <bpmn:sequenceFlow id="Flow_3" name="Yes" sourceRef="Gateway_HealthCheckRequired" targetRef="Task_PerformHealthCheck" />
+    <bpmn:sequenceFlow id="Flow_4" name="No" sourceRef="Gateway_HealthCheckRequired" targetRef="Task_SelectEnclosure" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_PerformHealthCheck" targetRef="Gateway_AnimalCleared" />
+    <bpmn:sequenceFlow id="Flow_6" name="Cleared" sourceRef="Gateway_AnimalCleared" targetRef="Task_SelectEnclosure" />
+    <bpmn:sequenceFlow id="Flow_7" name="Not cleared" sourceRef="Gateway_AnimalCleared" targetRef="EndEvent_NotAdmitted" />
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_SelectEnclosure" targetRef="Gateway_EnclosureAvailable" />
+    <bpmn:sequenceFlow id="Flow_9" name="Yes" sourceRef="Gateway_EnclosureAvailable" targetRef="Task_PlaceAnimal" />
+    <bpmn:sequenceFlow id="Flow_10" name="No" sourceRef="Gateway_EnclosureAvailable" targetRef="EndEvent_NoEnclosure" />
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="Task_PlaceAnimal" targetRef="Gateway_ZookeeperAssigned" />
+    <bpmn:sequenceFlow id="Flow_12" name="No" sourceRef="Gateway_ZookeeperAssigned" targetRef="Task_AssignZookeeper" />
+    <bpmn:sequenceFlow id="Flow_13" name="Yes" sourceRef="Gateway_ZookeeperAssigned" targetRef="Task_ConfirmAdmission" />
+    <bpmn:sequenceFlow id="Flow_14" sourceRef="Task_AssignZookeeper" targetRef="Task_ConfirmAdmission" />
+    <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_ConfirmAdmission" targetRef="EndEvent_Admitted" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_AnimalAdmission">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_AnimalAdmission">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="292" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="130" y="335" width="80" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RecordRequest_di" bpmnElement="Task_RecordRequest">
+        <dc:Bounds x="240" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_HealthCheckRequired_di" bpmnElement="Gateway_HealthCheckRequired" isMarkerVisible="true">
+        <dc:Bounds x="385" y="285" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="445" y="290" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SelectEnclosure_di" bpmnElement="Task_SelectEnclosure">
+        <dc:Bounds x="480" y="370" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_EnclosureAvailable_di" bpmnElement="Gateway_EnclosureAvailable" isMarkerVisible="true">
+        <dc:Bounds x="625" y="385" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="625" y="442" width="50" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PerformHealthCheck_di" bpmnElement="Task_PerformHealthCheck">
+        <dc:Bounds x="470" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_AnimalCleared_di" bpmnElement="Gateway_AnimalCleared" isMarkerVisible="true">
+        <dc:Bounds x="625" y="185" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="611" y="242" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_NotAdmitted_di" bpmnElement="EndEvent_NotAdmitted">
+        <dc:Bounds x="912" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="896" y="235" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ConfirmAdmission_di" bpmnElement="Task_ConfirmAdmission">
+        <dc:Bounds x="1080" y="450" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PlaceAnimal_di" bpmnElement="Task_PlaceAnimal">
+        <dc:Bounds x="720" y="290" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_NoEnclosure_di" bpmnElement="EndEvent_NoEnclosure">
+        <dc:Bounds x="752" y="392" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="720" y="435" width="81" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ZookeeperAssigned_di" bpmnElement="Gateway_ZookeeperAssigned" isMarkerVisible="true">
+        <dc:Bounds x="905" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="943" y="356" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AssignZookeeper_di" bpmnElement="Task_AssignZookeeper">
+        <dc:Bounds x="1080" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Admitted_di" bpmnElement="EndEvent_Admitted">
+        <dc:Bounds x="1262" y="472" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1255" y="515" width="51" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="188" y="310" />
+        <di:waypoint x="240" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="340" y="310" />
+        <di:waypoint x="385" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="410" y="285" />
+        <di:waypoint x="410" y="120" />
+        <di:waypoint x="470" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="416" y="188" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="410" y="335" />
+        <di:waypoint x="410" y="410" />
+        <di:waypoint x="480" y="410" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="418" y="363" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="570" y="120" />
+        <di:waypoint x="650" y="120" />
+        <di:waypoint x="650" y="185" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="625" y="210" />
+        <di:waypoint x="530" y="210" />
+        <di:waypoint x="530" y="370" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="558" y="185" width="39" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="675" y="210" />
+        <di:waypoint x="912" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="682" y="191" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="580" y="410" />
+        <di:waypoint x="625" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
+        <di:waypoint x="650" y="385" />
+        <di:waypoint x="650" y="330" />
+        <di:waypoint x="720" y="330" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="677" y="305" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
+        <di:waypoint x="675" y="410" />
+        <di:waypoint x="752" y="410" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="699" y="387" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
+        <di:waypoint x="820" y="330" />
+        <di:waypoint x="905" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12">
+        <di:waypoint x="955" y="330" />
+        <di:waypoint x="988" y="330" />
+        <di:waypoint x="988" y="300" />
+        <di:waypoint x="1080" y="300" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="992" y="318" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13_di" bpmnElement="Flow_13">
+        <di:waypoint x="930" y="355" />
+        <di:waypoint x="930" y="490" />
+        <di:waypoint x="1080" y="490" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="993" y="466" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14_di" bpmnElement="Flow_14">
+        <di:waypoint x="1130" y="340" />
+        <di:waypoint x="1130" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15_di" bpmnElement="Flow_15">
+        <di:waypoint x="1180" y="490" />
+        <di:waypoint x="1262" y="490" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

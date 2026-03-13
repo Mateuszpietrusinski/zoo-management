@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest
+pytest-bdd
+httpx
+ruff
+mypy

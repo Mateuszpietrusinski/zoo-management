@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_GuidedTour"
+                  targetNamespace="http://zoo.example.com/bpmn">
+  <bpmn:process id="Process_GuidedTour" name="Conduct Guided Tour" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_1" name="Guide requests tour start"/>
+    <bpmn:exclusiveGateway id="Gateway_GuideAvailable" name="Guide available?"/>
+    <bpmn:task id="Task_AssignGuide" name="Assign guide to tour"/>
+    <bpmn:task id="Task_GetRoute" name="Get zoo default tour route"/>
+    <bpmn:task id="Task_StartTour" name="Start tour and record start time"/>
+    <bpmn:task id="Task_VisitEnclosures" name="Visit each enclosure in route order"/>
+    <bpmn:task id="Task_EndTour" name="End tour and record end time"/>
+    <bpmn:endEvent id="EndEvent_Done" name="Tour complete"/>
+    <bpmn:endEvent id="EndEvent_Cancelled" name="Cancelled - No guide available"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Gateway_GuideAvailable"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Gateway_GuideAvailable" targetRef="EndEvent_Cancelled" name="No"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Gateway_GuideAvailable" targetRef="Task_AssignGuide" name="Yes"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_AssignGuide" targetRef="Task_GetRoute"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Task_GetRoute" targetRef="Task_StartTour"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_StartTour" targetRef="Task_VisitEnclosures"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_VisitEnclosures" targetRef="Task_EndTour"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_EndTour" targetRef="EndEvent_Done"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_GuidedTour">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_GuidedTour">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="132" y="145" width="76" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_GuideAvailable_di" bpmnElement="Gateway_GuideAvailable">
+        <dc:Bounds x="240" y="95" width="50" height="50"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="228" y="65" width="74" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_AssignGuide_di" bpmnElement="Task_AssignGuide">
+        <dc:Bounds x="340" y="80" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_GetRoute_di" bpmnElement="Task_GetRoute">
+        <dc:Bounds x="490" y="80" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_StartTour_di" bpmnElement="Task_StartTour">
+        <dc:Bounds x="640" y="80" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_VisitEnclosures_di" bpmnElement="Task_VisitEnclosures">
+        <dc:Bounds x="790" y="80" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_EndTour_di" bpmnElement="Task_EndTour">
+        <dc:Bounds x="940" y="80" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Done_di" bpmnElement="EndEvent_Done">
+        <dc:Bounds x="1092" y="102" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1080" y="145" width="60" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Cancelled_di" bpmnElement="EndEvent_Cancelled">
+        <dc:Bounds x="257" y="202" width="36" height="36"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="230" y="245" width="90" height="27"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="188" y="120"/>
+        <di:waypoint x="240" y="120"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="265" y="145"/>
+        <di:waypoint x="275" y="220"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="280" y="178" width="15" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="290" y="120"/>
+        <di:waypoint x="340" y="120"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="306" y="98" width="18" height="14"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="440" y="120"/>
+        <di:waypoint x="490" y="120"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="590" y="120"/>
+        <di:waypoint x="640" y="120"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="740" y="120"/>
+        <di:waypoint x="790" y="120"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="890" y="120"/>
+        <di:waypoint x="940" y="120"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="1040" y="120"/>
+        <di:waypoint x="1092" y="120"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

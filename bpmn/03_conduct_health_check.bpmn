@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_HealthCheck" targetNamespace="http://zoo.example.com/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.12.0">
+  <bpmn:process id="Process_HealthCheck" name="Conduct Health Check" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_1" name="Health check requested" />
+    <bpmn:task id="Task_CreateRequest" name="Create or receive health check request" />
+    <bpmn:task id="Task_RetrieveAnimal" name="Veterinarian retrieves animal record" />
+    <bpmn:task id="Task_PerformExamination" name="Perform examination">
+      <bpmn:outgoing>Flow_0xow6je</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_RecordResult" name="Record result">
+      <bpmn:incoming>Flow_0xow6je</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_ResultType" name="Result type?" />
+    <bpmn:task id="Task_ScheduleFollowUp" name="Schedule follow-up or treatment" />
+    <bpmn:task id="Task_Escalate" name="Escalate / urgent treatment" />
+    <bpmn:endEvent id="EndEvent_Healthy" name="Complete" />
+    <bpmn:endEvent id="EndEvent_FollowUp" name="Follow-up scheduled" />
+    <bpmn:endEvent id="EndEvent_Critical" name="Escalated" />
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_CreateRequest" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_CreateRequest" targetRef="Task_RetrieveAnimal" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_RetrieveAnimal" targetRef="Task_PerformExamination" />
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_RecordResult" targetRef="Gateway_ResultType" />
+    <bpmn:sequenceFlow id="Flow_9" name="Healthy" sourceRef="Gateway_ResultType" targetRef="EndEvent_Healthy" />
+    <bpmn:sequenceFlow id="Flow_10" name="Need follow-up" sourceRef="Gateway_ResultType" targetRef="Task_ScheduleFollowUp" />
+    <bpmn:sequenceFlow id="Flow_11" name="Critical" sourceRef="Gateway_ResultType" targetRef="Task_Escalate" />
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="Task_ScheduleFollowUp" targetRef="EndEvent_FollowUp" />
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="Task_Escalate" targetRef="EndEvent_Critical" />
+    <bpmn:sequenceFlow id="Flow_0xow6je" sourceRef="Task_PerformExamination" targetRef="Task_RecordResult" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_HealthCheck">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_HealthCheck">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="138" y="278" width="64" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RecordResult_di" bpmnElement="Task_RecordResult">
+        <dc:Bounds x="840" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ResultType_di" bpmnElement="Gateway_ResultType" isMarkerVisible="true">
+        <dc:Bounds x="1015" y="235" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1009" y="285" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ScheduleFollowUp_di" bpmnElement="Task_ScheduleFollowUp">
+        <dc:Bounds x="1130" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_FollowUp_di" bpmnElement="EndEvent_FollowUp">
+        <dc:Bounds x="1302" y="107" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1295" y="143" width="51" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Healthy_di" bpmnElement="EndEvent_Healthy">
+        <dc:Bounds x="1302" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1296" y="278" width="48" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Escalate_di" bpmnElement="Task_Escalate">
+        <dc:Bounds x="1130" y="350" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Critical_di" bpmnElement="EndEvent_Critical">
+        <dc:Bounds x="1302" y="372" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1295" y="413" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RetrieveAnimal_di" bpmnElement="Task_RetrieveAnimal">
+        <dc:Bounds x="450" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CreateRequest_di" bpmnElement="Task_CreateRequest">
+        <dc:Bounds x="280" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PerformExamination_di" bpmnElement="Task_PerformExamination">
+        <dc:Bounds x="650" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="188" y="260" />
+        <di:waypoint x="280" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="380" y="260" />
+        <di:waypoint x="450" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="550" y="260" />
+        <di:waypoint x="650" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="940" y="260" />
+        <di:waypoint x="1015" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
+        <di:waypoint x="1065" y="260" />
+        <di:waypoint x="1302" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1165" y="235" width="38" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
+        <di:waypoint x="1040" y="235" />
+        <di:waypoint x="1060" y="120" />
+        <di:waypoint x="1130" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="973" y="153" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
+        <di:waypoint x="1040" y="285" />
+        <di:waypoint x="1060" y="390" />
+        <di:waypoint x="1130" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1013" y="366" width="34" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12">
+        <di:waypoint x="1230" y="120" />
+        <di:waypoint x="1303" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13_di" bpmnElement="Flow_13">
+        <di:waypoint x="1230" y="390" />
+        <di:waypoint x="1302" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xow6je_di" bpmnElement="Flow_0xow6je">
+        <di:waypoint x="750" y="260" />
+        <di:waypoint x="840" y="260" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

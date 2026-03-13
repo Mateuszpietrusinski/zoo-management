@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_AssignZookeeper"
+                  targetNamespace="http://zoo.example.com/bpmn">
+  <bpmn:process id="Process_AssignZookeeper" name="Assign Zookeeper to Enclosure" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_1" name="Assignment requested"/>
+    <bpmn:task id="Task_IdentifyEnclosure" name="Identify enclosure"/>
+    <bpmn:task id="Task_IdentifyZookeeper" name="Identify zookeeper"/>
+    <bpmn:exclusiveGateway id="Gateway_Valid" name="Enclosure in zoo and zookeeper employed?"/>
+    <bpmn:task id="Task_CreateAssociation" name="Create or update association"/>
+    <bpmn:task id="Task_ConfirmAssignment" name="Confirm assignment"/>
+    <bpmn:endEvent id="EndEvent_Done" name="Assignment complete"/>
+    <bpmn:endEvent id="EndEvent_Failed" name="Assignment failed"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_IdentifyEnclosure"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_IdentifyEnclosure" targetRef="Task_IdentifyZookeeper"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Task_IdentifyZookeeper" targetRef="Gateway_Valid"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Gateway_Valid" targetRef="EndEvent_Failed" name="No"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Gateway_Valid" targetRef="Task_CreateAssociation" name="Yes"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_CreateAssociation" targetRef="Task_ConfirmAssignment"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_ConfirmAssignment" targetRef="EndEvent_Done"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_AssignZookeeper">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_AssignZookeeper">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_IdentifyEnclosure_di" bpmnElement="Task_IdentifyEnclosure">
+        <dc:Bounds x="240" y="80" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_IdentifyZookeeper_di" bpmnElement="Task_IdentifyZookeeper">
+        <dc:Bounds x="385" y="80" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Valid_di" bpmnElement="Gateway_Valid">
+        <dc:Bounds x="530" y="95" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CreateAssociation_di" bpmnElement="Task_CreateAssociation">
+        <dc:Bounds x="625" y="80" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ConfirmAssignment_di" bpmnElement="Task_ConfirmAssignment">
+        <dc:Bounds x="770" y="80" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Done_di" bpmnElement="EndEvent_Done">
+        <dc:Bounds x="912" y="102" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Failed_di" bpmnElement="EndEvent_Failed">
+        <dc:Bounds x="547" y="202" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="188" y="120"/>
+        <di:waypoint x="240" y="120"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="340" y="120"/>
+        <di:waypoint x="385" y="120"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="485" y="120"/>
+        <di:waypoint x="530" y="120"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="555" y="145"/>
+        <di:waypoint x="565" y="220"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="580" y="120"/>
+        <di:waypoint x="625" y="120"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="725" y="120"/>
+        <di:waypoint x="770" y="120"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="870" y="120"/>
+        <di:waypoint x="912" y="120"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
